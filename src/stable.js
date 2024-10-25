@@ -60,3 +60,13 @@ export function saveBase64AsImageFile(base64String, fileName) {
   // Revoke the Blob URL
   URL.revokeObjectURL(blobURL)
 }
+
+export async function base64FromImageFile(file) {
+  // use async/await to read the file
+  const reader = new FileReader()
+  reader.readAsDataURL(file)
+  return new Promise((resolve, reject) => {
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = reject
+  })
+}

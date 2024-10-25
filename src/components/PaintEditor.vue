@@ -32,9 +32,13 @@ new p5(sketch => {
 })
 </script>
 <template>
-  <div id="c"></div>
-  <br />
-  <button id="save">save canvas as png</button>
+  <section>
+    <h1>Sketch</h1>
+    <div id="c"></div>
+    <p><i>Tip: Draw on the canvas to erase part of the image.</i></p>
+    <br />
+    <button id="save">save canvas as png</button>
+  </section>
 </template>
 <style scoped>
 #c {
