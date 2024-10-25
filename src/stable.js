@@ -17,10 +17,9 @@ export async function textToImage(prompt) {
   try {
     const formData = new FormData()
     formData.append('prompt', prompt)
-    formData.append('style_preset', '3d-model')
 
-    const json = apiFetch(
-      'https://api.stability.ai/v2beta/stable-image/generate/sd3',
+    const json = await apiFetch(
+      'https://api.stability.ai/v2beta/stable-image/generate/core',
       formData,
     )
 
