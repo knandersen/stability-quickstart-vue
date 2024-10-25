@@ -1,10 +1,29 @@
 <script setup>
+import { ref } from 'vue'
 import PaintEditor from './components/PaintEditor.vue'
 import img from './assets/f.png'
+import { textToImage, saveBase64AsImageFile } from './stable.js'
+
+let status = ref('idle')
+
+let img_str = ref('')
+
+async function gen() {
+  status.value = 'loading'
+  const img = await textToImage('cat in a space suit floating in space')
+  status.value = 'done'
+  img_str.value = img
+
+  saveBase64AsImageFile(img, 'f.png')
+}
 </script>
 
 <template>
-  <main><PaintEditor :image="img" /></main>
+  <main>
+    <PaintEditor :image="img" />{{ status
+    }}<button @click="gen">generate</button>
+    <img :src="img_str" />
+  </main>
 </template>
 
 <style scoped>
