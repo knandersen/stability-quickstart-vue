@@ -1,6 +1,9 @@
 <script setup>
 import p5 from 'p5'
 
+const width = 512
+const height = 512
+
 const props = defineProps(['image'])
 
 new p5(sketch => {
@@ -11,12 +14,12 @@ new p5(sketch => {
   }
 
   sketch.setup = () => {
-    sketch.createCanvas(512, 512).parent('c')
+    sketch.createCanvas(width, height).parent('c')
     sketch.image(img, 0, 0)
 
     let saveButton = document.getElementById('save')
     saveButton.addEventListener('click', () => {
-      sketch.save('myCanvas.png')
+      sketch.save('canvas.png')
     })
   }
 
@@ -29,16 +32,14 @@ new p5(sketch => {
 })
 </script>
 <template>
-  <div id="c" />
+  <div id="c"></div>
   <br />
-  <button id="save">Save</button>
+  <button id="save">save canvas as png</button>
 </template>
 <style scoped>
 #c {
-  width: 512px;
-  height: 512px;
-  display: inline-block;
-  background-image: url('data:image/svg+xml,<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(%23clip0_700_190)"><rect width="40" height="40" fill="white"/><rect width="20" height="20" fill="%23D9D9D9"/><rect x="20" y="20" width="20" height="20" fill="%23D9D9D9"/></g><defs><clipPath id="clip0_700_190"><rect width="40" height="40" fill="white"/></clipPath></defs></svg>');
+  display: inline-flex;
+  background-image: url('data:image/svg+xml,<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(%23clip0_700_190)"><rect width="32" height="32" fill="white"/><rect width="16" height="16" fill="%23D9D9D9"/><rect x="16" y="16" width="16" height="16" fill="%23D9D9D9"/></g><defs><clipPath id="clip0_700_190"><rect width="32" height="32" fill="white"/></clipPath></defs></svg>');
   background-repeat: repeat;
 }
 </style>
