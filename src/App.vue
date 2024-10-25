@@ -5,14 +5,13 @@ import img from './assets/f.png'
 import { textToImage, saveBase64AsImageFile } from './stable.js'
 
 let status = ref('idle')
+let imgSrc = ref('')
 
-let img_str = ref('')
-
-async function gen() {
+async function generateImage() {
   status.value = 'loading'
   const img = await textToImage('cat in a space suit floating in space')
   status.value = 'done'
-  img_str.value = img
+  imgSrc.value = img
 
   saveBase64AsImageFile(img, 'f.png')
 }
@@ -20,9 +19,10 @@ async function gen() {
 
 <template>
   <main>
-    <PaintEditor :image="img" />{{ status
-    }}<button @click="gen">generate</button>
-    <img :src="img_str" />
+    <PaintEditor :image="img" />
+    {{ status }}
+    <button @click="generateImage">generate</button>
+    <img :src="imgSrc" />
   </main>
 </template>
 
