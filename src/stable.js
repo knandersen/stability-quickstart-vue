@@ -1,24 +1,28 @@
+async function apiFetch(url, formData) {
+  const fetchOptions = {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${import.meta.env.VITE_STABLE_API_KEY}`,
+      Accept: 'application/json',
+    },
+    body: formData,
+  }
+
+  const response = await fetch(url, fetchOptions)
+  const json = await response.json()
+  return json
+}
+
 export async function textToImage(prompt) {
   try {
     const formData = new FormData()
     formData.append('prompt', prompt)
-    //formData.append('model', 'sd3-medium')
     formData.append('style_preset', '3d-model')
 
-    const fetchOptions = {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${import.meta.env.VITE_STABLE_API_KEY}`,
-        Accept: 'application/json',
-      },
-      body: formData,
-    }
-
-    const response = await fetch(
+    const json = apiFetch(
       'https://api.stability.ai/v2beta/stable-image/generate/sd3',
-      fetchOptions,
+      formData,
     )
-    const json = await response.json()
 
     return 'data:image/png;base64,' + json.image
   } catch (error) {
