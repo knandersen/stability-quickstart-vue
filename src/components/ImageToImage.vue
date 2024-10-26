@@ -5,18 +5,16 @@
       <img :src="imgSrc" />
     </div>
     <input type="file" @change="handleFileChange" accept="image/*" />
+    <textarea v-model="prompt" placeholder="Enter your prompt here"></textarea>
     <button @click="doSomething" :disabled="!imgSrc">Edit</button>
   </section>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import {
-  base64FromImageFile,
-  textToImage,
-  saveBase64AsImageFile,
-} from '../stable.js'
+import { base64FromImageFile, saveBase64AsImageFile } from '../stable.js'
 
+const prompt = ref('')
 const imgSrc = ref('')
 const uploadedImage = ref(null)
 
@@ -29,7 +27,7 @@ const handleFileChange = async event => {
 }
 
 const doSomething = async () => {
-  // this function doesn't do anything
+  // this function doesn't do anything yet
 }
 </script>
 
@@ -51,5 +49,11 @@ img {
 }
 button {
   display: block;
+}
+textarea {
+  width: 100%;
+  min-width: 512px;
+  height: 100px;
+  margin-bottom: 10px;
 }
 </style>
