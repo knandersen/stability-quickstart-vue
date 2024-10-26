@@ -77,7 +77,6 @@ export async function base64FromImageFile(file) {
 export function base64ToBlob(base64, mimeType) {
   // Decode the base64 string to binary data
   const byteCharacters = atob(base64)
-  console.log(byteCharacters)
   const byteNumbers = new Array(byteCharacters.length)
 
   for (let i = 0; i < byteCharacters.length; i++) {
