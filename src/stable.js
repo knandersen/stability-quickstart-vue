@@ -1,32 +1,35 @@
-async function apiFetch(url, formData) {
+async function apiFetch(url, body) {
   const fetchOptions = {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${import.meta.env.VITE_STABLE_API_KEY}`,
       Accept: 'application/json',
     },
-    body: formData,
+    body: body,
   }
 
-  const response = await fetch(url, fetchOptions)
-  const json = await response.json()
-  return json
-}
-
-export async function textToImage(prompt) {
   try {
-    const formData = new FormData()
-    formData.append('prompt', prompt)
-
-    const json = await apiFetch(
-      'https://api.stability.ai/v2beta/stable-image/generate/core',
-      formData,
-    )
-
-    return 'data:image/png;base64,' + json.image
+    const response = await fetch(url, fetchOptions)
+    const json = await response.json()
+    if (json.errors) {
+      console.error(json)
+    }
+    return json
   } catch (error) {
     console.error(error)
   }
+}
+
+export async function textToImage(prompt) {
+  const formData = new FormData()
+  formData.append('prompt', prompt)
+
+  const json = await apiFetch(
+    'https://api.stability.ai/v2beta/stable-image/generate/core',
+    formData,
+  )
+
+  return 'data:image/png;base64,' + json.image
 }
 
 export function saveBase64AsImageFile(base64String, fileName) {
@@ -69,4 +72,19 @@ export async function base64FromImageFile(file) {
     reader.onload = () => resolve(reader.result)
     reader.onerror = reject
   })
+}
+
+export function base64ToBlob(base64, mimeType) {
+  // Decode the base64 string to binary data
+  const byteCharacters = atob(base64)
+  console.log(byteCharacters)
+  const byteNumbers = new Array(byteCharacters.length)
+
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i)
+  }
+
+  const byteArray = new Uint8Array(byteNumbers)
+  // Create a Blob with the binary data and specify the MIME type
+  return new Blob([byteArray], { type: mimeType })
 }
