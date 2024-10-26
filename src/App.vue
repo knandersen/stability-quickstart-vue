@@ -1,5 +1,5 @@
 <script setup>
-import PaintEditor from './components/PaintEditor.vue'
+import Sketch from './components/Sketch.vue'
 import TextToImage from './components/TextToImage.vue'
 import ImageToImage from './components/ImageToImage.vue'
 import astrocat from './assets/astrocat.png'
@@ -7,7 +7,7 @@ import astrocat from './assets/astrocat.png'
 
 <template>
   <main>
-    <PaintEditor :image="astrocat" />
+    <Sketch :image="astrocat" />
     <TextToImage />
     <ImageToImage />
   </main>
