@@ -32,6 +32,24 @@ export async function textToImage(prompt) {
   return 'data:image/png;base64,' + json.image
 }
 
+export async function sketchToImage(image, prompt) {
+  const formData = new FormData()
+  formData.append('prompt', prompt)
+
+  const prefix = 'data:image/png;base64,'
+  image = image.slice(prefix.length)
+  const b = base64ToBlob(image, 'image/png')
+  //   console.log(b)
+  formData.append('image', b, 'image.png')
+
+  const json = await apiFetch(
+    'https://api.stability.ai/v2beta/stable-image/control/sketch',
+    formData,
+  )
+
+  return 'data:image/png;base64,' + json.image
+}
+
 export function saveBase64AsImageFile(base64String, fileName) {
   // Remove the prefix from the base64 string (data:image/png;base64,)
   const base64Image = base64String.split(';base64,').pop()
